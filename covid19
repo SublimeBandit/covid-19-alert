@@ -1,0 +1,37 @@
+from slacker import Slacker
+import time, calendar
+from datetime import datetime
+
+slack = Slacker('xoxp-1594365443076-1585114408021-1601790682609-1fa1e7b25f5d6f254807846cf2e7e707')
+
+def dbgout(message):
+    
+    print(datetime.now().strftime('[%m/%d %H:%M:%S]'), message)
+    timeoftd = datetime.now().strftime('[%m/%d %H:%M:%S] ') + message
+    slack.chat.post_message('#covid19', timeoftd)
+
+message = "TODAY"
+
+markdown_text = '''
+
+''금일 국내 코로나19 발생 현황''
+
+'''
+
+attach_dict = {
+    'color'      :'#ff0000',
+
+    'author_name':'Sublime Bandit',
+    'author_link':'github.com/SublimeBandit',
+    'title'      :'오늘의 코로나19 확진자수',
+    'title_link' :'http://ncov.mohw.go.kr/bdBoardList_Real.do?brdId=1&brdGubun=11&ncvContSeq=&contSeq=&board_id=&gubun=',
+    'text'       :'신규발생 000 명 △증가 (+ - %)',
+    'image_url'  :'https://blog.kakaocdn.net/dn/cN4QSM/btqQIaeMKKo/XjDGDGRgzGei5ytvqZZJQk/img.jpg'
+
+   }
+
+attach_list = [attach_dict]
+
+print(dbgout(message))
+
+slack.chat.post_message(channel="covid19", text=markdown_text, attachments=attach_list)
